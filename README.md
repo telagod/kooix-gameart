@@ -17,18 +17,33 @@
 
 ## 🚀 快速开始
 
-### NPX 直接运行（推荐）
+### 🎯 可执行文件（推荐，无需Node.js）
+1. 前往 [Releases](https://github.com/telagod/kooix-gameart/releases) 页面
+2. 下载对应平台的可执行文件：
+   - Windows: `kooix-gameart-mcp-win-x64.exe`
+   - Linux: `kooix-gameart-mcp-linux-x64` 
+   - macOS: `kooix-gameart-mcp-macos-x64`
+3. 直接运行即可启动MCP服务器
+
+### 📦 从GitHub直接安装
 ```bash
-npx kooix-gameart-mcp
+# 安装最新版本
+npm install https://github.com/telagod/kooix-gameart/tarball/main
+
+# 安装特定版本
+npm install https://github.com/telagod/kooix-gameart/tarball/v1.0.0
 ```
 
-### 全局安装
+### 🔧 从GitHub Packages安装
 ```bash
-npm install -g kooix-gameart-mcp
-kooix-gameart-mcp
+# 配置GitHub Packages
+npm config set @telagod:registry https://npm.pkg.github.com
+
+# 安装包
+npm install @telagod/kooix-gameart-mcp
 ```
 
-### 本地开发
+### 💻 本地开发
 ```bash
 git clone https://github.com/telagod/kooix-gameart.git
 cd kooix-gameart

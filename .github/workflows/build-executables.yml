@@ -1,0 +1,93 @@
+name: Build Executables
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+
+jobs:
+  build-executables:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: linux-x64
+            ext: ''
+          - os: windows-latest
+            target: win-x64
+            ext: '.exe'
+          - os: macos-latest
+            target: macos-x64
+            ext: ''
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Install pkg
+        run: npm install -g pkg
+
+      - name: Create executable
+        run: pkg dist/index.js --target node18-${{ matrix.target }} --output kooix-gameart-mcp-${{ matrix.target }}${{ matrix.ext }}
+
+      - name: Upload executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: kooix-gameart-mcp-${{ matrix.target }}
+          path: kooix-gameart-mcp-${{ matrix.target }}${{ matrix.ext }}
+
+  release-executables:
+    needs: build-executables
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Create GitHub Release with executables
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          body: |
+            ## 🎮 Kooix GameArt MCP ${{ github.ref_name }}
+            
+            ### 📦 多种安装方式
+            
+            **1. 可执行文件（无需Node.js）:**
+            - Windows: `kooix-gameart-mcp-win-x64.exe`
+            - Linux: `kooix-gameart-mcp-linux-x64`
+            - macOS: `kooix-gameart-mcp-macos-x64`
+            
+            **2. 从GitHub直接安装:**
+            ```bash
+            npm install https://github.com/telagod/kooix-gameart/tarball/${{ github.ref_name }}
+            ```
+            
+            **3. 从源码运行:**
+            ```bash
+            git clone https://github.com/telagod/kooix-gameart.git
+            cd kooix-gameart
+            npm install && npm run build && npm start
+            ```
+            
+            ### 🚀 使用方式
+            下载对应平台的可执行文件，直接运行即可启动MCP服务器。
+          files: |
+            kooix-gameart-mcp-*/kooix-gameart-mcp-*
+          draft: false
+          prerelease: false

@@ -5,7 +5,9 @@
       "WebFetch(domain:spec.modelcontextprotocol.io)",
       "Bash(git init:*)",
       "Bash(gh repo create:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git push:*)",
+      "Bash(git branch:*)"
     ],
     "deny": [],
     "ask": []

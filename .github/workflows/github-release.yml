@@ -1,0 +1,103 @@
+name: Build and Publish to GitHub
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish (e.g., 1.0.1)'
+        required: true
+        type: string
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@telagod'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Set version from tag
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/v}
+          npm version $VERSION --no-git-tag-version
+
+      - name: Set version from input
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          npm version ${{ github.event.inputs.version }} --no-git-tag-version
+
+      - name: Update package.json for GitHub Packages
+        run: |
+          # 更新包名以支持GitHub Packages
+          sed -i 's/"name": "kooix-gameart-mcp"/"name": "@telagod\/kooix-gameart-mcp"/' package.json
+          # 添加publishConfig
+          npm pkg set publishConfig.registry=https://npm.pkg.github.com
+
+      - name: Publish to GitHub Packages
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create tarball for direct download
+        run: npm pack
+
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          body: |
+            ## 🎮 Kooix GameArt MCP ${{ github.ref_name }}
+            
+            轻量化游戏资源生成MCP工具新版本发布！
+            
+            ### 📦 安装方式
+            
+            **从GitHub Packages安装：**
+            ```bash
+            npm install @telagod/kooix-gameart-mcp --registry=https://npm.pkg.github.com
+            ```
+            
+            **直接从GitHub安装：**
+            ```bash
+            npm install https://github.com/telagod/kooix-gameart/tarball/${{ github.ref_name }}
+            ```
+            
+            **下载可执行文件：**
+            - 下载下方的 `.tgz` 文件
+            - 解压后运行 `npm install -g kooix-gameart-mcp-*.tgz`
+            
+            ### ✨ 主要功能
+            - 🎨 像素风格SVG资源生成
+            - 🚀 批量资源生成
+            - 🗂️ 本地资源库管理  
+            - 🎯 Godot项目集成
+            
+            查看 [使用文档](https://github.com/telagod/kooix-gameart#readme) 了解更多。
+          files: |
+            *.tgz
+            dist/**/*
+          draft: false
+          prerelease: false
