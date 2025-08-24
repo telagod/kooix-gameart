@@ -1,6 +1,6 @@
 # Kooix GameArt MCP
 
-[![npm version](https://badge.fury.io/js/kooix-gameart-mcp.svg)](https://badge.fury.io/js/kooix-gameart-mcp)
+[![Release](https://img.shields.io/github/v/release/telagod/kooix-gameart)](https://github.com/telagod/kooix-gameart/releases)
 [![CI](https://github.com/telagod/kooix-gameart/actions/workflows/ci.yml/badge.svg)](https://github.com/telagod/kooix-gameart/actions/workflows/ci.yml)
 
 轻量化游戏资源生成MCP工具，专门用于像素游戏和文字游戏的简单SVG资源生成。
@@ -36,8 +36,8 @@ npm install https://github.com/telagod/kooix-gameart/tarball/v1.0.0
 
 ### 🔧 从GitHub Packages安装
 ```bash
-# 配置GitHub Packages
-npm config set @telagod:registry https://npm.pkg.github.com
+# 配置GitHub Packages（一次性设置）
+echo "@telagod:registry=https://npm.pkg.github.com" >> ~/.npmrc
 
 # 安装包
 npm install @telagod/kooix-gameart-mcp
@@ -188,7 +188,8 @@ MIT License - 查看 [LICENSE](LICENSE) 文件了解详情。
 ## 🔗 相关链接
 
 - [GitHub仓库](https://github.com/telagod/kooix-gameart)
-- [npm包](https://www.npmjs.com/package/kooix-gameart-mcp)
+- [GitHub Releases](https://github.com/telagod/kooix-gameart/releases)
+- [GitHub Packages](https://github.com/telagod/kooix-gameart/packages)
 - [问题反馈](https://github.com/telagod/kooix-gameart/issues)
 - [MCP官方文档](https://modelcontextprotocol.io/)
 
