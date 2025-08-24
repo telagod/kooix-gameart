@@ -1,0 +1,21 @@
+{
+  "version": "1.0.0",
+  "created_at": "2024-08-24T00:00:00.000Z",
+  "assets": {},
+  "tags": [],
+  "stats": {
+    "total_assets": 0,
+    "by_type": {
+      "ui_button": 0,
+      "icon": 0,
+      "character": 0,
+      "item": 0,
+      "background_element": 0
+    },
+    "by_style": {
+      "pixel": 0,
+      "flat": 0,
+      "outline": 0
+    }
+  }
+}

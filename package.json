@@ -1,0 +1,61 @@
+{
+  "name": "kooix-gameart-mcp",
+  "version": "1.0.0",
+  "description": "轻量化游戏资源生成MCP工具，专门用于像素游戏SVG资源生成",
+  "main": "dist/index.js",
+  "type": "module",
+  "bin": {
+    "kooix-gameart-mcp": "./dist/index.js"
+  },
+  "files": [
+    "dist/**/*",
+    "assets/library.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "postinstall": "node -e \"try { require('fs').mkdirSync('./assets/generated', {recursive: true}); } catch(e) {}\""
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol", 
+    "game",
+    "gamedev",
+    "svg",
+    "pixel-art",
+    "godot",
+    "asset-generation",
+    "ai-tools",
+    "claude"
+  ],
+  "author": {
+    "name": "Kooix",
+    "url": "https://github.com/telagod/kooix-gameart"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/telagod/kooix-gameart.git"
+  },
+  "bugs": {
+    "url": "https://github.com/telagod/kooix-gameart/issues"
+  },
+  "homepage": "https://github.com/telagod/kooix-gameart#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "tsx": "^4.0.0",
+    "@types/node": "^20.0.0",
+    "@types/uuid": "^9.0.0"
+  }
+}
