@@ -187,7 +187,7 @@ class KooixGameArtServer {
       try {
         switch (name) {
           case 'generate_asset': {
-            const config = args as AssetConfig;
+            const config = args as unknown as AssetConfig;
             const result = await this.tools.generateAsset(config);
             
             return {
@@ -201,7 +201,7 @@ class KooixGameArtServer {
           }
 
           case 'batch_generate': {
-            const config = args as BatchConfig;
+            const config = args as unknown as BatchConfig;
             const result = await this.tools.batchGenerate(config);
             
             return {
@@ -215,7 +215,7 @@ class KooixGameArtServer {
           }
 
           case 'manage_library': {
-            const config = args as LibraryConfig;
+            const config = args as unknown as LibraryConfig;
             const result = await this.tools.manageLibrary(config);
             
             return {
@@ -229,7 +229,7 @@ class KooixGameArtServer {
           }
 
           case 'export_godot': {
-            const config = args as GodotExportConfig;
+            const config = args as unknown as GodotExportConfig;
             const result = await this.tools.exportToGodot(config);
             
             return {
