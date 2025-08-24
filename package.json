@@ -17,6 +17,8 @@
     "start": "node dist/index.js",
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
+    "lint": "echo 'No linting configured'",
+    "test": "echo 'No tests configured'",
     "prepublishOnly": "npm run build",
     "postinstall": "node -e \"try { require('fs').mkdirSync('./assets/generated', {recursive: true}); } catch(e) {}\""
   },
