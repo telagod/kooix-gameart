@@ -1,6 +1,6 @@
 {
   "name": "kooix-gameart-mcp",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "轻量化游戏资源生成MCP工具，专门用于像素游戏SVG资源生成",
   "main": "dist/index.js",
   "type": "module",
