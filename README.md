@@ -5,6 +5,15 @@
 
 轻量化游戏资源生成MCP工具，专门用于像素游戏和文字游戏的简单SVG资源生成。
 
+## 📑 目录
+- [✨ 特性](#-特性)
+- [🚀 快速开始](#-快速开始)
+- [⚙️ MCP 配置指南](#️-mcp-配置指南)
+- [🛠️ MCP工具参考](#️-mcp工具参考)
+- [🎨 资源类型示例](#-资源类型示例)
+- [🎮 使用场景](#-使用场景)
+- [🛠️ 开发](#️-开发)
+
 ## ✨ 特性
 
 - 🎮 **专门优化**：针对像素游戏精心设计的提示词模板
@@ -16,6 +25,10 @@
 - 🗂️ **资源管理**：本地资源库管理和标签系统
 
 ## 🚀 快速开始
+
+### 📋 系统要求
+- **Node.js**: >= 18.0.0
+- **兼容工具**: Claude Desktop, Cursor, VS Code Copilot, Windsurf, Zed 等
 
 ### 🎯 可执行文件（推荐，无需Node.js）
 1. 前往 [Releases](https://github.com/telagod/kooix-gameart/releases) 页面
@@ -51,7 +64,168 @@ npm install
 npm run dev
 ```
 
-## 🛠️ MCP工具
+## ⚙️ MCP 配置指南
+
+### 🔧 Claude Desktop
+**配置位置**: `~/AppData/Roaming/Claude/claude_desktop_config.json` (Windows) 或 `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
+
+```json
+{
+  "mcpServers": {
+    "kooix-gameart": {
+      "command": "node",
+      "args": ["/path/to/kooix-gameart/dist/index.js"]
+    }
+  }
+}
+```
+
+**使用可执行文件**:
+```json
+{
+  "mcpServers": {
+    "kooix-gameart": {
+      "command": "/path/to/kooix-gameart-mcp-win-x64.exe",
+      "args": []
+    }
+  }
+}
+```
+
+**从GitHub直接安装**:
+```json
+{
+  "mcpServers": {
+    "kooix-gameart": {
+      "command": "npx",
+      "args": ["https://github.com/telagod/kooix-gameart/tarball/v1.0.2"]
+    }
+  }
+}
+```
+
+### 🎯 Cursor
+**配置位置**: `.cursorrules` 或 Cursor 设置中的 MCP 配置
+
+```json
+{
+  "mcp": {
+    "servers": {
+      "kooix-gameart": {
+        "command": "npx",
+        "args": ["-y", "@telagod/kooix-gameart-mcp"]
+      }
+    }
+  }
+}
+```
+
+### 💻 VS Code + Continue
+**配置位置**: `~/.continue/config.json`
+
+```json
+{
+  "mcpServers": {
+    "kooix-gameart": {
+      "command": "npx",
+      "args": ["-y", "@telagod/kooix-gameart-mcp"]
+    }
+  }
+}
+```
+
+### 🌊 Windsurf
+**配置位置**: Windsurf MCP 设置
+
+```json
+{
+  "mcpServers": {
+    "kooix-gameart": {
+      "command": "node",
+      "args": ["/path/to/kooix-gameart-mcp"]
+    }
+  }
+}
+```
+
+### ⚡ Zed
+**配置位置**: `~/.config/zed/settings.json`
+
+```json
+{
+  "experimental": {
+    "mcp": {
+      "servers": {
+        "kooix-gameart": {
+          "command": "npx",
+          "args": ["-y", "@telagod/kooix-gameart-mcp"]
+        }
+      }
+    }
+  }
+}
+```
+
+### 🧠 JetBrains AI Assistant
+**配置位置**: IDE Settings > AI Assistant > Model Context Protocol
+
+```xml
+<server name="kooix-gameart">
+  <command>npx</command>
+  <args>
+    <arg>-y</arg>
+    <arg>@telagod/kooix-gameart-mcp</arg>
+  </args>
+</server>
+```
+
+### 📱 其他工具配置
+
+**通用 MCP 配置**:
+```json
+{
+  "mcpServers": {
+    "kooix-gameart": {
+      "command": "npx",
+      "args": ["-y", "@telagod/kooix-gameart-mcp"],
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  }
+}
+```
+
+**Docker 环境**:
+```dockerfile
+FROM node:18-alpine
+RUN npm install -g @telagod/kooix-gameart-mcp
+CMD ["kooix-gameart-mcp"]
+```
+
+### ✅ 验证安装
+
+配置完成后，在你的AI工具中尝试以下命令：
+
+1. **生成游戏图标**:
+   ```
+   使用 kooix-gameart 生成一个红色血瓶图标
+   ```
+
+2. **批量生成UI元素**:
+   ```
+   生成一套攻击、防御、治疗按钮
+   ```
+
+3. **管理资源库**:
+   ```
+   列出我的所有游戏资源
+   ```
+
+## 🛠️ MCP工具参考
+
+### 📝 工具概览
+本MCP服务器提供4个核心工具，用于游戏资源的生成和管理：
 
 ### 1. generate_asset - 生成单个资源
 ```javascript
