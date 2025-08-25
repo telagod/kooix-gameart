@@ -71,26 +71,69 @@ npm run dev
 <details>
 <summary><strong>🔧 Claude Desktop</strong></summary>
 
-**配置位置**: `~/AppData/Roaming/Claude/claude_desktop_config.json` (Windows) 或 `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
+**配置文件位置**:
+- **Windows**: `C:\Users\{username}\AppData\Roaming\Claude\claude_desktop_config.json`
+- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Linux**: `~/.config/claude/claude_desktop_config.json`
 
-**从源码运行**:
+**从GitHub Packages安装**:
+
+*Windows*:
 ```json
 {
   "mcpServers": {
     "kooix-gameart": {
-      "command": "node",
-      "args": ["/path/to/kooix-gameart/dist/index.js"]
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "@telagod/kooix-gameart-mcp"]
+    }
+  }
+}
+```
+
+*Linux/macOS*:
+```json
+{
+  "mcpServers": {
+    "kooix-gameart": {
+      "command": "npx",
+      "args": ["-y", "@telagod/kooix-gameart-mcp"]
     }
   }
 }
 ```
 
 **使用可执行文件**:
+
+*Windows*:
 ```json
 {
   "mcpServers": {
     "kooix-gameart": {
-      "command": "/path/to/kooix-gameart-mcp-win-x64.exe",
+      "command": "C:\\Downloads\\kooix-gameart-mcp-win-x64.exe",
+      "args": []
+    }
+  }
+}
+```
+
+*Linux*:
+```json
+{
+  "mcpServers": {
+    "kooix-gameart": {
+      "command": "/home/user/kooix-gameart-mcp-linux-x64",
+      "args": []
+    }
+  }
+}
+```
+
+*macOS*:
+```json
+{
+  "mcpServers": {
+    "kooix-gameart": {
+      "command": "/Users/user/kooix-gameart-mcp-macos-x64",
       "args": []
     }
   }
@@ -109,18 +152,6 @@ npm run dev
 }
 ```
 
-**从GitHub Packages安装**:
-```json
-{
-  "mcpServers": {
-    "kooix-gameart": {
-      "command": "npx",
-      "args": ["-y", "@telagod/kooix-gameart-mcp"]
-    }
-  }
-}
-```
-
 </details>
 
 <details>
@@ -128,38 +159,53 @@ npm run dev
 
 **推荐方式 - 使用命令行配置**:
 
-**从GitHub Packages安装**:
+**Windows**:
+```cmd
+# GitHub Packages
+claude mcp add kooix-gameart -- cmd /c "npx -y @telagod/kooix-gameart-mcp"
+
+# GitHub直接安装
+claude mcp add kooix-gameart -- cmd /c "npx https://github.com/telagod/kooix-gameart/tarball/v1.0.2"
+
+# 可执行文件
+claude mcp add kooix-gameart -- "C:\path\to\kooix-gameart-mcp-win-x64.exe"
+```
+
+**Linux/macOS**:
 ```bash
+# GitHub Packages
 claude mcp add kooix-gameart -- npx -y @telagod/kooix-gameart-mcp
-```
 
-**从GitHub直接安装**:
-```bash
+# GitHub直接安装
 claude mcp add kooix-gameart -- npx https://github.com/telagod/kooix-gameart/tarball/v1.0.2
-```
 
-**使用可执行文件**:
-```bash
+# 可执行文件 (Linux)
 claude mcp add kooix-gameart -- /path/to/kooix-gameart-mcp-linux-x64
+
+# 可执行文件 (macOS)
+claude mcp add kooix-gameart -- /path/to/kooix-gameart-mcp-macos-x64
 ```
 
-**手动配置 - .claude/settings.json**:
+**手动配置 - 配置文件位置**:
+- **Windows**: `C:\Users\{username}\.claude.json`
+- **macOS**: `~/.claude.json`
+- **Linux**: `~/.claude.json`
 
-**本地安装配置**:
+**Windows 手动配置**:
 ```json
 {
   "mcp": {
     "servers": {
       "kooix-gameart": {
-        "command": "node",
-        "args": ["/path/to/kooix-gameart/dist/index.js"]
+        "command": "cmd",
+        "args": ["/c", "npx", "-y", "@telagod/kooix-gameart-mcp"]
       }
     }
   }
 }
 ```
 
-**从GitHub安装**:
+**Linux/macOS 手动配置**:
 ```json
 {
   "mcp": {
@@ -167,6 +213,20 @@ claude mcp add kooix-gameart -- /path/to/kooix-gameart-mcp-linux-x64
       "kooix-gameart": {
         "command": "npx",
         "args": ["-y", "@telagod/kooix-gameart-mcp"]
+      }
+    }
+  }
+}
+```
+
+**可执行文件配置**:
+```json
+{
+  "mcp": {
+    "servers": {
+      "kooix-gameart": {
+        "command": "C:\\path\\to\\kooix-gameart-mcp-win-x64.exe",
+        "args": []
       }
     }
   }
@@ -408,12 +468,33 @@ docker run -p 3000:3000 -v ./assets:/app/assets kooix-gameart-mcp
 配置完成后，验证MCP服务器是否正常工作：
 
 **Claude Code 验证**:
+
+*Windows*:
+```cmd
+# 检查已安装的MCP服务器
+claude mcp list
+
+# 测试服务器连接
+claude mcp test kooix-gameart
+```
+
+*Linux/macOS*:
 ```bash
 # 检查已安装的MCP服务器
 claude mcp list
 
 # 测试服务器连接
 claude mcp test kooix-gameart
+```
+
+**预期输出示例**:
+```
+Status: ✔ connected
+Command: cmd (Windows) 或 npx (Linux/macOS)
+Args: /c npx @telagod/kooix-gameart-mcp (Windows) 或 -y @telagod/kooix-gameart-mcp (Linux/macOS)
+Config location: C:\Users\{username}\.claude.json (Windows) 或 ~/.claude.json (Linux/macOS)
+Capabilities: tools
+Tools: 4 tools
 ```
 
 **在AI工具中测试**:
