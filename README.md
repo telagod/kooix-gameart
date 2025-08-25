@@ -66,9 +66,14 @@ npm run dev
 
 ## ⚙️ MCP 配置指南
 
-### 🔧 Claude Desktop
+### 🔧 主流AI工具配置
+
+<details>
+<summary><strong>🔧 Claude Desktop</strong></summary>
+
 **配置位置**: `~/AppData/Roaming/Claude/claude_desktop_config.json` (Windows) 或 `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
 
+**从源码运行**:
 ```json
 {
   "mcpServers": {
@@ -104,7 +109,72 @@ npm run dev
 }
 ```
 
-### 🎯 Cursor
+**从GitHub Packages安装**:
+```json
+{
+  "mcpServers": {
+    "kooix-gameart": {
+      "command": "npx",
+      "args": ["-y", "@telagod/kooix-gameart-mcp"]
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><strong>💻 Claude Code</strong></summary>
+
+Claude Code 通过 `.claude/settings.json` 配置MCP服务器：
+
+**本地安装配置**:
+```json
+{
+  "mcp": {
+    "servers": {
+      "kooix-gameart": {
+        "command": "node",
+        "args": ["/path/to/kooix-gameart/dist/index.js"]
+      }
+    }
+  }
+}
+```
+
+**从GitHub安装**:
+```json
+{
+  "mcp": {
+    "servers": {
+      "kooix-gameart": {
+        "command": "npx",
+        "args": ["-y", "@telagod/kooix-gameart-mcp"]
+      }
+    }
+  }
+}
+```
+
+**可执行文件**:
+```json
+{
+  "mcp": {
+    "servers": {
+      "kooix-gameart": {
+        "command": "kooix-gameart-mcp-linux-x64",
+        "args": []
+      }
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><strong>🎯 Cursor</strong></summary>
+
 **配置位置**: `.cursorrules` 或 Cursor 设置中的 MCP 配置
 
 ```json
@@ -120,7 +190,25 @@ npm run dev
 }
 ```
 
-### 💻 VS Code + Continue
+**使用本地安装**:
+```json
+{
+  "mcp": {
+    "servers": {
+      "kooix-gameart": {
+        "command": "node",
+        "args": ["./node_modules/@telagod/kooix-gameart-mcp/dist/index.js"]
+      }
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><strong>💻 VS Code + Continue</strong></summary>
+
 **配置位置**: `~/.continue/config.json`
 
 ```json
@@ -134,21 +222,53 @@ npm run dev
 }
 ```
 
-### 🌊 Windsurf
+**本地开发配置**:
+```json
+{
+  "mcpServers": {
+    "kooix-gameart": {
+      "command": "node",
+      "args": ["/workspace/kooix-gameart/dist/index.js"]
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><strong>🌊 Windsurf</strong></summary>
+
 **配置位置**: Windsurf MCP 设置
 
 ```json
 {
   "mcpServers": {
     "kooix-gameart": {
-      "command": "node",
-      "args": ["/path/to/kooix-gameart-mcp"]
+      "command": "npx",
+      "args": ["-y", "@telagod/kooix-gameart-mcp"]
     }
   }
 }
 ```
 
-### ⚡ Zed
+**可执行文件配置**:
+```json
+{
+  "mcpServers": {
+    "kooix-gameart": {
+      "command": "/path/to/kooix-gameart-mcp",
+      "args": []
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><strong>⚡ Zed</strong></summary>
+
 **配置位置**: `~/.config/zed/settings.json`
 
 ```json
@@ -166,7 +286,11 @@ npm run dev
 }
 ```
 
-### 🧠 JetBrains AI Assistant
+</details>
+
+<details>
+<summary><strong>🧠 JetBrains AI Assistant</strong></summary>
+
 **配置位置**: IDE Settings > AI Assistant > Model Context Protocol
 
 ```xml
@@ -179,29 +303,100 @@ npm run dev
 </server>
 ```
 
-### 📱 其他工具配置
+**IntelliJ IDEA 配置文件**:
+```json
+{
+  "mcp": {
+    "servers": [
+      {
+        "name": "kooix-gameart",
+        "command": "npx",
+        "args": ["-y", "@telagod/kooix-gameart-mcp"]
+      }
+    ]
+  }
+}
+```
 
-**通用 MCP 配置**:
+</details>
+
+<details>
+<summary><strong>🚀 其他AI工具</strong></summary>
+
+**Augment Code**:
 ```json
 {
   "mcpServers": {
     "kooix-gameart": {
       "command": "npx",
-      "args": ["-y", "@telagod/kooix-gameart-mcp"],
-      "env": {
-        "NODE_ENV": "production"
+      "args": ["-y", "@telagod/kooix-gameart-mcp"]
+    }
+  }
+}
+```
+
+**Copilot Chat**:
+```json
+{
+  "mcp": {
+    "servers": {
+      "kooix-gameart": {
+        "command": "npx",
+        "args": ["-y", "@telagod/kooix-gameart-mcp"]
       }
     }
   }
 }
 ```
 
-**Docker 环境**:
+**Tabnine**:
+```json
+{
+  "mcpServers": {
+    "kooix-gameart": {
+      "command": "npx",
+      "args": ["-y", "@telagod/kooix-gameart-mcp"]
+    }
+  }
+}
+```
+
+</details>
+
+### 🐳 容器化部署
+
+<details>
+<summary><strong>🐳 Docker 配置</strong></summary>
+
+**Dockerfile**:
 ```dockerfile
 FROM node:18-alpine
+WORKDIR /app
 RUN npm install -g @telagod/kooix-gameart-mcp
+EXPOSE 3000
 CMD ["kooix-gameart-mcp"]
 ```
+
+**docker-compose.yml**:
+```yaml
+version: '3.8'
+services:
+  kooix-gameart-mcp:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./assets:/app/assets
+```
+
+**使用预构建镜像**:
+```bash
+docker run -p 3000:3000 -v ./assets:/app/assets kooix-gameart-mcp
+```
+
+</details>
 
 ### ✅ 验证安装
 
