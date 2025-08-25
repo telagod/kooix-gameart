@@ -126,7 +126,24 @@ npm run dev
 <details>
 <summary><strong>💻 Claude Code</strong></summary>
 
-Claude Code 通过 `.claude/settings.json` 配置MCP服务器：
+**推荐方式 - 使用命令行配置**:
+
+**从GitHub Packages安装**:
+```bash
+claude mcp add kooix-gameart -- npx -y @telagod/kooix-gameart-mcp
+```
+
+**从GitHub直接安装**:
+```bash
+claude mcp add kooix-gameart -- npx https://github.com/telagod/kooix-gameart/tarball/v1.0.2
+```
+
+**使用可执行文件**:
+```bash
+claude mcp add kooix-gameart -- /path/to/kooix-gameart-mcp-linux-x64
+```
+
+**手动配置 - .claude/settings.json**:
 
 **本地安装配置**:
 ```json
@@ -156,19 +173,7 @@ Claude Code 通过 `.claude/settings.json` 配置MCP服务器：
 }
 ```
 
-**可执行文件**:
-```json
-{
-  "mcp": {
-    "servers": {
-      "kooix-gameart": {
-        "command": "kooix-gameart-mcp-linux-x64",
-        "args": []
-      }
-    }
-  }
-}
-```
+参考 [Claude Code MCP文档](https://docs.anthropic.com/en/docs/claude-code/mcp) 获取更多信息。
 
 </details>
 
@@ -400,7 +405,18 @@ docker run -p 3000:3000 -v ./assets:/app/assets kooix-gameart-mcp
 
 ### ✅ 验证安装
 
-配置完成后，在你的AI工具中尝试以下命令：
+配置完成后，验证MCP服务器是否正常工作：
+
+**Claude Code 验证**:
+```bash
+# 检查已安装的MCP服务器
+claude mcp list
+
+# 测试服务器连接
+claude mcp test kooix-gameart
+```
+
+**在AI工具中测试**:
 
 1. **生成游戏图标**:
    ```
@@ -415,6 +431,11 @@ docker run -p 3000:3000 -v ./assets:/app/assets kooix-gameart-mcp
 3. **管理资源库**:
    ```
    列出我的所有游戏资源
+   ```
+
+4. **检查MCP工具可用性**:
+   ```
+   显示 kooix-gameart 的所有可用工具
    ```
 
 ## 🛠️ MCP工具参考
